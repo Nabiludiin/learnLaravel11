@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Post;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 
@@ -12,57 +13,13 @@ Route::get('/about', function () {
 });
 
 Route::get('/posts', function () {
-    return view('posts', ['title' => 'Blog', 'posts' => [
-        [
-            'id' => 1,
-            'slug' => 'judul-artikel-1',
-            'title' => 'Judul Artikel 1',
-            'author' => 'Muhammad Nabiluddin',
-            'body' => 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis vitae, nesciunt sed hic, quam temporibus
-            quibusdam nostrum dolorum magni voluptates laudantium expedita repellat? Autem iusto quia eum possimus eaque
-            tempore!'
-        ],
-        [
-            'id' => 2,
-            'slug' => 'judul-artikel-2',
-            'title' => 'Judul Artikel 2',
-            'author' => 'Muhammad Nabiluddin',
-            'body' => 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis vitae, nesciunt sed hic, quam temporibus
-            quibusdam nostrum dolorum magni voluptates laudantium expedita repellat? Autem iusto quia eum possimus eaque
-            tempore!Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis vitae, nesciunt sed hic, quam temporibus
-            quibusdam nostrum dolorum magni voluptates laudantium expedita repellat? Autem iusto quia eum possimus eaque
-            tempore!'
-        ]
-    ]]);
+    return view('posts', ['title' => 'Blog', 'posts' => Post::all()]);
 });
 
 Route::get('/posts/{slug}', function($slug) {
-    $posts = [
-        [
-            'id' => 1,
-            'slug' => 'judul-artikel-1',
-            'title' => 'Judul Artikel 1',
-            'author' => 'Muhammad Nabiluddin',
-            'body' => 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis vitae, nesciunt sed hic, quam temporibus
-            quibusdam nostrum dolorum magni voluptates laudantium expedita repellat? Autem iusto quia eum possimus eaque
-            tempore!'
-        ],
-        [
-            'id' => 2,
-            'slug' => 'judul-artikel-2',
-            'title' => 'Judul Artikel 2',
-            'author' => 'Muhammad Nabiluddin',
-            'body' => 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis vitae, nesciunt sed hic, quam temporibus
-            quibusdam nostrum dolorum magni voluptates laudantium expedita repellat? Autem iusto quia eum possimus eaque
-            tempore!Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis vitae, nesciunt sed hic, quam temporibus
-            quibusdam nostrum dolorum magni voluptates laudantium expedita repellat? Autem iusto quia eum possimus eaque
-            tempore!'
-        ]
-        ];
+    
 
-        $post = Arr::first($posts, function($post) use ($slug){
-            return $post['slug'] == $slug;
-        });
+        $post = Post::find($slug);
 
         return view('post', ['title' => 'Single Post', 'post' => $post]);
 });
